@@ -92,14 +92,14 @@ public class MapFrameFactory {
                 case 3: name = "sR"; break;
                 case 4: name = "tc"; break;
                 case 5: name = "tt"; break;
-                case 6: name = "tY"; break;
+                case 6: case 7: name = "tY"; break;
             }
             itemMap = NMS.getDeclaredFieldObject(NMS.mcItemsClass, name, null);
 
 
             DataComponents_MapID = NMS.VER_1_20_R4 ?
                     NMS.getDeclaredFieldObject(NMS.getMcClassNew("core.component.DataComponents"),
-                            NMS.VER_1_21_R4 ? "M" : NMS.VER_1_21_R2 ? "L" : "B", null) : null;
+                            NMS.VER_1_21_R7 ? "T" : NMS.VER_1_21_R4 ? "M" : NMS.VER_1_21_R2 ? "L" : "B", null) : null;
 
             if (subVer <= 7) {
                 cItemFrame = NMS.getConstructor(NMS.mcEntityItemFrameClass, MethodType.methodType(void.class, int.class, int.class, int.class, int.class));
@@ -165,7 +165,11 @@ public class MapFrameFactory {
                 ItemFrame_setItem = NMS.getMethodVirtual(NMS.mcEntityItemFrameClass, "setItem", MethodType.methodType(void.class, NMS.mcItemStackClass, boolean.class, boolean.class));
             }
 
-            ItemFrame_setRotation = NMS.getMethodVirtual(NMS.mcEntityItemFrameClass, subVer<=17 ? "setRotation" : subVer == 18 ? "a" : "b", MethodType.methodType(void.class, int.class));
+            if (subVer <= 17) name = "setRotation";
+            else if (subVer == 18) name = "a";
+            else if (subVer < 21 || (subVer == 21 && subRVer <= 6)) name = "b";
+            else name = "a";
+            ItemFrame_setRotation = NMS.getMethodVirtual(NMS.mcEntityItemFrameClass, name, MethodType.methodType(void.class, int.class));
 
             DataComponentHolder_getComponents = NMS.VER_1_20_R4 ? NMS.getMethodVirtual(mcDataComponentHolderClass, "a", MethodType.methodType(mcDataComponentMapClass)) : null;
 

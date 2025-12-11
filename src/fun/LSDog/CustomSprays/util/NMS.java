@@ -57,8 +57,9 @@ public class NMS {
         put("1.21.8", "1_21_R5");
         put("1.21.9", "1_21_R6");
         put("1.21.10", "1_21_R6");
+        put("1.21.11", "1_21_R7");
     }};
-    public static final boolean VER_1_17, VER_1_20_R4, VER_1_21_R2, VER_1_21_R4;
+    public static final boolean VER_1_17, VER_1_20_R4, VER_1_21_R2, VER_1_21_R4, VER_1_21_R7;
     /** Using spigot mapping (paper 1.20.4-) or Mojang mapping (paper 1.20.5+). */
     public static final boolean SP = Double.parseDouble(getVersionNumber().split("\\.",2)[1]) >= 20.5 && Package.getPackage("com.destroystokyo.paper") == null;
 
@@ -147,6 +148,7 @@ public class NMS {
         VER_1_20_R4 = subVer > 20 || (subVer==20 && subRVer>=4);
         VER_1_21_R2 = subVer > 21 || (subVer==21 && subRVer>=2);
         VER_1_21_R4 = subVer > 21 || (subVer==21 && subRVer>=4);
+        VER_1_21_R7 = subVer > 21 || (subVer==21 && subRVer>=7);
 
         try {
 
@@ -161,7 +163,7 @@ public class NMS {
                 default:
                     name = "g"; break;
             }
-            fEntityPlayer_playerConnection = getFieldGetter(mcEntityPlayerClass, name, mcPlayerConnectionClass);
+            fEntityPlayer_playerConnection = getFieldGetter(mcEntityPlayerClass, name, mcPlayerConnectionClass/*ServerGamePacketListenerImpl*/);
 
 
             name = "networkManager";
@@ -192,8 +194,9 @@ public class NMS {
                 case 20:
                     name = (subRVer == 1) ? "m" : "n"; break;
                 case 21:
+                    name = (subRVer <= 6) ? "n" : "k"; break;
                 default:
-                    name = "n"; break;
+                    name = "k"; break;
             }
             fNetworkManager_channel = getFieldGetter(mcNetworkManagerClass, name,
                     (subVer <= 7) ?
@@ -227,8 +230,8 @@ public class NMS {
                 case 18: name = "ae"; break;
                 case 19: name = subRVer == 1 ? "ae" : subRVer == 2 ? "ah" : "af"; break;
                 case 20: name = subRVer == 1 ? "af" : subRVer == 2 ? "ah" : subRVer == 3 ? "aj" : "al"; break;
-                case 21: name = subRVer == 1 ? "an" : subRVer <= 3 ? "ar" : subRVer == 4 ? "ao" : subRVer == 5 ? "ar" : "az"; break;
-                default: name = "az"; break;
+                case 21: name = subRVer == 1 ? "an" : subRVer <= 3 ? "ar" : subRVer == 4 ? "ao" : subRVer == 5 ? "ar" : subRVer == 6 ? "az" : "aA"; break;
+                default: name = "aA"; break;
             }
             Entity_getId = getMethodVirtual(mcEntityClass, name, MethodType.methodType(int.class));
 
@@ -237,8 +240,8 @@ public class NMS {
                 case 18: name = "ai"; break;
                 case 19: name = subRVer == 1 ? "ai" : subRVer == 2 ? "al" : "aj"; break;
                 case 20: name = subRVer == 1 ? "aj" : subRVer == 2 ? "al" : subRVer == 3 ? "an" : "ap"; break;
-                case 21: name = subRVer == 1 ? "ar" : subRVer <= 3 ? "au" : subRVer == 4 ? "ar" : subRVer == 5 ? "au" : "aC"; break;
-                default: name = "aC"; break;
+                case 21: name = subRVer == 1 ? "ar" : subRVer <= 3 ? "au" : subRVer == 4 ? "ar" : subRVer == 5 ? "au" : subRVer == 6 ? "aC" : "aD"; break;
+                default: name = "aD"; break;
             }
             Entity_getDataWatcher = getMethodVirtual(mcEntityClass, name, MethodType.methodType(mcDataWatcherClass));
 
