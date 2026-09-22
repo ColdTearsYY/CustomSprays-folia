@@ -38,7 +38,7 @@ public class CustomSprays extends JavaPlugin {
         } catch (Exception ignored) { }
         // cancel async tasks
         fun.LSDog.CustomSprays.util.SchedulerUtil.cancelTasks(this);
-        if (NMS.getSubVer() >= 8) getServer().getOnlinePlayers().forEach(PacketListener::removePlayer);
+        if (NMS.getMainVer() > 1 || NMS.getSubVer() >= 8) getServer().getOnlinePlayers().forEach(PacketListener::removePlayer);
         else getServer().getOnlinePlayers().forEach(PacketListener7::removePlayer);
         log("CustomSprays disabled.");
     }
@@ -77,13 +77,13 @@ public class CustomSprays extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new EventListener(), this);
 
         // 检测条件并启用 双击F 喷漆
-        if (NMS.getSubVer() >= 9 && getConfig().getBoolean("F_spray")) {
+        if (NMS.getMainVer() > 1 || NMS.getSubVer() >= 9 && getConfig().getBoolean("F_spray")) {
             Bukkit.getPluginManager().registerEvents(new EventListenerNew(), this);
             log("§8[F_spray] enabled.");
         }
 
         // 1.13 及以上 MapView 支持int
-        if (NMS.getSubVer() >= 13) {
+        if (NMS.getMainVer() > 1 || NMS.getSubVer() >= 13) {
             MapViewId.setIdRange(-2048_000_000,-2048_000_999);
             MapViewId.sprayViewId = -2048_001_000;
         }
@@ -106,8 +106,7 @@ public class CustomSprays extends JavaPlugin {
         });
 
         // 计算颜色板
-        if (getConfig().getBoolean("better_color") && NMS.getSubVer() >= 8) {
-            fun.LSDog.CustomSprays.util.SchedulerUtil.runTaskAsynchronously(this, () -> {
+        if (getConfig().getBoolean("better_color") && (NMS.getMainVer() > 1 || NMS.getSubVer() >= 8)) {
                 log("Loading Color Palette");
                 if (!MapColors.loadColorPalette()) {
                     MapColors.calculateColorPalette();

@@ -52,7 +52,7 @@ public class EventListener implements Listener {
         // Send existing spray
         SprayManager.sendExistSprays(player);
         // Start monitoring player's packets
-        if (NMS.getSubVer() >= 8) PacketListener.addPlayer(player);
+        if (NMS.getMainVer() > 1 || NMS.getSubVer() >= 8) PacketListener.addPlayer(player);
         else PacketListener7.addPlayer(player);
         if (CustomSprays.latestVersion != null && player.isOp()) {
             player.sendMessage(CustomSprays.prefix + " §6§l嘿, 管理! CustomSprays 有个更新~~ §7-> §b§l" + CustomSprays.latestVersion);
@@ -70,7 +70,7 @@ public class EventListener implements Listener {
         Player player = e.getPlayer();
         DataManager.data.invalidateCache(player);
         SprayManager.removeShownPlayer(player);
-        if (NMS.getSubVer() >= 8) PacketListener.removePlayer(player);
+        if (NMS.getMainVer() > 1 || NMS.getSubVer() >= 8) PacketListener.removePlayer(player);
         else PacketListener7.removePlayer(player);
     }
 
@@ -134,11 +134,11 @@ public class EventListener implements Listener {
                     lore.set(finalUseTimeLineIndex, loreTimesUse + useTime[0]);
                     itemMeta.setLore(lore);
                     item.setItemMeta(itemMeta);
-                    if (NMS.getSubVer() <= 8) {
+                    if (NMS.getMainVer() > 1 || NMS.getSubVer() >= 9) {
+                        EventListenerNew.setItemInHandNew(e, item);
+                    } else {
                         //noinspection deprecation
                         player.setItemInHand(item);
-                    } else {
-                        EventListenerNew.setItemInHandNew(e, item);
                     }
                 }
             });
