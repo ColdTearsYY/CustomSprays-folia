@@ -390,19 +390,6 @@ public class NMS {
         return getMcClass("network.protocol.Packet", "network.protocol.Packet", "Packet");
     }
 
-    public static Class<?> getPacketClass(String packetName) {
-        String newName = packetName;
-        if (getMainVer() > 1 || getSubVer() >= 17) {
-            switch (packetName) {
-                case "PacketPlayOutEntityDestroy": newName = "ClientboundRemoveEntitiesPacket"; break;
-                case "PacketPlayOutSpawnEntity": newName = "ClientboundAddEntityPacket"; break;
-                case "PacketPlayOutEntityMetadata": newName = "ClientboundSetEntityDataPacket"; break;
-                case "PacketPlayOutMap": newName = "ClientboundMapItemDataPacket"; break;
-                case "PacketPlayOutSetSlot": newName = "ClientboundContainerSetSlotPacket"; break;
-            }
-        }
-        return getMcClass("network.protocol.game."+newName, "network.protocol.game."+packetName, packetName);
-    }
 
     public static Class<?> getPacketClassMoj(String mojName) {
         return getMcClassNew("network.protocol.game." + mojName);

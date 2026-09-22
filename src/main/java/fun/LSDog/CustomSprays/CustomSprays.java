@@ -77,7 +77,7 @@ public class CustomSprays extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new EventListener(), this);
 
         // 检测条件并启用 双击F 喷漆
-        if (NMS.getMainVer() > 1 || NMS.getSubVer() >= 9 && getConfig().getBoolean("F_spray")) {
+        if ((NMS.getMainVer() > 1 || NMS.getSubVer() >= 9) && getConfig().getBoolean("F_spray")) {
             Bukkit.getPluginManager().registerEvents(new EventListenerNew(), this);
             log("§8[F_spray] enabled.");
         }
