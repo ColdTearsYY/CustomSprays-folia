@@ -4,7 +4,7 @@
 
   <groupId>fun.LSDog</groupId>
   <artifactId>CustomSprays</artifactId>
-  <version>1.5.22-folia-hotfix-1</version>
+  <version>1.5.25-folia</version>
   <packaging>jar</packaging>
 
   <name>CustomSprays</name>
