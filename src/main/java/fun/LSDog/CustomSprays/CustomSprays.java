@@ -107,6 +107,7 @@ public class CustomSprays extends JavaPlugin {
 
         // 计算颜色板
         if (getConfig().getBoolean("better_color") && (NMS.getMainVer() > 1 || NMS.getSubVer() >= 8)) {
+            fun.LSDog.CustomSprays.util.SchedulerUtil.runTaskAsynchronously(this, () -> {
                 log("Loading Color Palette");
                 if (!MapColors.loadColorPalette()) {
                     MapColors.calculateColorPalette();
